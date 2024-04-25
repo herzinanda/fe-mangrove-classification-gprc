@@ -42,6 +42,8 @@ import {
 } from "@/components/ui/table"
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
+import { Separator } from "@/components/ui/separator"
+import { Label } from "@/components/ui/label"
 
 
 export default function Home() {
@@ -183,60 +185,69 @@ export default function Home() {
               </DropdownMenuContent>
             </DropdownMenu>
           </header>
-          <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-            <div className="flex max-w-screen items-center">
-            <ScrollArea className="block w-[1000px] whitespace-nowrap rounded-md border">
-              <Table className=""> 
-                <TableCaption>A list of your recent invoices.</TableCaption>
-                <TableHeader>
-                  <TableRow className="">
-                    <TableHead className="text-center">Water Height</TableHead>
-                    <TableHead className="text-center">Water Temperature</TableHead>
-                    <TableHead className="text-center">Air Temperature</TableHead>
-                    <TableHead className="text-center">Air Humidity</TableHead>
-                    <TableHead className="text-center">TDS</TableHead>
-                    <TableHead className="text-center">Oxidation Reduction Potential (ODS)</TableHead>
-                    <TableHead className="text-center">Dissolved Oxygen</TableHead>
-                    <TableHead className="text-center">pH</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow className="h-full">
-                    <TableCell className="h-full">
-                      <input type="text" name="waterHeight" id="suhuAir" className="border py-2 px-1" />
-                    </TableCell>
-                    <TableCell className="">
-                      <input type="text" name="waterTemp" id="suhuAir" className="border py-2 px-1" />
-                    </TableCell>
-                    <TableCell className="">
-                      <input type="text" name="airTemp" id="suhuAir" className="border py-2 px-1" />
-                    </TableCell>
-                    <TableCell className="">
-                      <input type="text" name="airHumid" id="suhuAir" className="border py-2 px-1" />
-                    </TableCell>
-                    <TableCell className="">
-                      <input type="text" name="tds" id="suhuAir" className="border py-2 px-1" />
-                    </TableCell>
-                    <TableCell className="">
-                      <input type="text" name="ods" id="suhuAir" className="border py-2 px-1" />
-                    </TableCell>
-                    <TableCell className="">
-                      <input type="text" name="do" id="suhuAir" className="border py-2 px-1" />
-                    </TableCell>
-                    <TableCell className="">
-                      <input type="text" name="pH" id="suhuAir" className="border py-2 px-1" />
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-              <ScrollBar orientation="horizontal" />
-            </ScrollArea>
+          <main className="flex flex-col p-4 lg:p-6">
+            <div className="flex flex-col gap-6">
+              <h1 className="text-lg font-semibold md:text-2xl">Klasifikasi Zona Tanam Mangrove Desa Pulau Sembilan Menggunakan Gaussian Process Regression for Classification</h1>
+              <p className="">Silakan masukkan parameter pada tabel di bawah ini untuk diklasifikasi.</p>
+            </div>
+            <Table className="rounded m-0">
+              <TableHeader className="bg-slate-200 m-0">
+                <TableRow className="">
+                  <TableHead className="font-bold text-center">Water Height</TableHead>
+                  <TableHead className="font-bold text-center">Water Temperature</TableHead>
+                  <TableHead className="font-bold text-center">Air Temperature</TableHead>
+                  <TableHead className="font-bold text-center">Air Humidity</TableHead>
+                  <TableHead className="font-bold text-center">TDS</TableHead>
+                  <TableHead className="font-bold text-center">Oxidation Reduction Potential (ODS)</TableHead>
+                  <TableHead className="font-bold text-center">Dissolved Oxygen</TableHead>
+                  <TableHead className="font-bold text-center">pH</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody className="rounded bg-slate-200">
+                <TableRow className="">
+                  <TableCell className="rounded p-0">
+                    <input type="text" name="waterHeight" id="suhuAir" className="box-border w-full border rounded py-2 px-1" />
+                  </TableCell>
+                  <TableCell className="p-0">
+                    <input type="text" name="waterTemp" id="suhuAir" className="box-border w-full border rounded py-2 px-1" />
+                  </TableCell>
+                  <TableCell className="p-0">
+                    <input type="text" name="airTemp" id="suhuAir" className="box-border w-full border rounded py-2 px-1" />
+                  </TableCell>
+                  <TableCell className="p-0">
+                    <input type="text" name="airHumid" id="suhuAir" className="box-border w-full border rounded py-2 px-1" />
+                  </TableCell>
+                  <TableCell className="p-0">
+                    <input type="text" name="tds" id="suhuAir" className="box-border w-full border rounded py-2 px-1" />
+                  </TableCell>
+                  <TableCell className="p-0">
+                    <input type="text" name="ods" id="suhuAir" className="box-border w-full border rounded py-2 px-1" />
+                  </TableCell>
+                  <TableCell className="p-0">
+                    <input type="text" name="do" id="suhuAir" className="box-border w-full border rounded py-2 px-1" />
+                  </TableCell>
+                  <TableCell className="p-0">
+                    <input type="text" name="pH" id="suhuAir" className="box-border w-full border rounded py-2 px-1" />
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+            <div className="flex flex-row w-full items-center justify-center mt-2 -my-2">
+              <Button type="submit" className="my-2">Submit for Classification</Button>
             </div>
 
-            <div className="flex items-center">
-              <h1 className="text-lg font-semibold md:text-2xl">Some text here</h1>
+            <Separator className="mt-6" />
+            <span className="my-6">Atau kamu bisa mengupload file ekstensi csv pada form di bawah ini.</span>
+            {/* <div className="flex flex-col max-w-sm gap-1.5">
+              
+            </div> */}
+            <div className="flex flex-col w-full max-w-sm gap-2">
+              <Label htmlFor="file">Masukkan File (.csv)</Label>
+              <Input id="file" type="file" className="" />
+              <Button type="submit" className="my-">Submit for Classification</Button>
             </div>
-
+            <div className="flex flex-row w-full items-center justify-center -my-2">
+            </div>
           </main>
         </div>
       </div>
