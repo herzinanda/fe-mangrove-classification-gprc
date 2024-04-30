@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
@@ -11,8 +13,18 @@ import {
 } from "@/components/ui/card"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
+
+
+
+const links = [
+    { href: '/', name: 'Dashboard', icon: 'HomeIcon' },
+    { href: '/classification', name: 'Classification', icon: 'LineChart' },
+]
 
 const Sidebar = () => {
+    const pathname = usePathname();
+
     return (
         <>
             <div className="hidden border-r bg-muted/40 md:block">
@@ -25,7 +37,20 @@ const Sidebar = () => {
                     </div>
                     <div className="flex-1">
                         <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-                            <Link
+                            { links.map((link, index) => {
+                                return (
+                                    <Link
+                                        key={ index }
+                                        href={ link.href }
+                                        className={ `flex items-center gap-3 rounded-lg px-3 py-2 transition-all 
+                                        ${pathname === link.href ? "bg-primary text-primary-foreground hover:text-muted" : "text-muted-foreground hover:text-primary"}` }
+                                    >
+                                        {/* <HomeIcon className="h-4 w-4" /> */ }
+                                        { link.name }
+                                    </Link>
+                                )
+                            }) }
+                            {/* <Link
                                 href="#"
                                 className="flex items-center gap-3 bg-primary text-primary-foreground rounded-lg px-3 py-2 transition-all hover:text-muted"
                             >
@@ -38,7 +63,7 @@ const Sidebar = () => {
                             >
                                 <LineChart className="h-4 w-4" />
                                 Charts
-                            </Link>
+                            </Link> */}
                         </nav>
                     </div>
                 </div>
