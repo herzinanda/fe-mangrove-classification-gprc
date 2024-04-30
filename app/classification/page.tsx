@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
@@ -24,7 +26,15 @@ import { Separator } from "@/components/ui/separator"
 import { Label } from "@/components/ui/label"
 import Sidebar from "../components/sidebar/sidebar"
 
+import { useEdgeStore } from '../../lib/edgestore';
+import * as React from 'react';
+import { Progress } from "@/components/ui/progress"
+
 const Classification = () => {
+    const [file, setFile] = React.useState<File>();
+    const [progress, setProgress] = React.useState()
+    const { edgestore } = useEdgeStore();
+
     return (
         <>
             <Sidebar></Sidebar>
@@ -86,8 +96,37 @@ const Classification = () => {
             </div> */}
                 <div className="flex flex-col w-full max-w-sm gap-2 mt-2">
                     <Label htmlFor="file">Masukkan File (.csv)</Label>
-                    <Input id="file" type="file" className="" />
-                    <Button type="submit" className="my-">Submit for Classification</Button>
+                    <Input id="file" type="file" className=""
+                        onChange={ (e) => {
+                            setFile(e.target.files?.[0]);
+                        } }
+                    />
+
+                    {
+                        (progress >= 0) ? <>
+                            <Progress value={ progress } />
+                            { progress == 100 ? <p>Upload Selesai</p> : "" }
+                        </> : ""
+                    }
+
+
+                    <Button type="submit" className=""
+                        onClick={ async () => {
+                            if (file) {
+                                const res = await edgestore.publicFiles.upload({
+                                    file,
+                                    onProgressChange: (progress) => {
+                                        // you can use this to show a progress bar
+                                        setProgress(progress);
+                                        console.log(progress);
+                                    },
+                                });
+                                // you can run some server action or api here
+                                // to add the necessary data to your database
+                                console.log(res);
+                            }
+                        } }
+                    >Submit for Classification</Button>
                 </div>
                 <div className="flex flex-row w-full items-center justify-center -my-2">
                 </div>
