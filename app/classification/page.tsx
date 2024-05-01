@@ -32,7 +32,8 @@ import { Progress } from "@/components/ui/progress"
 
 const Classification = () => {
     const [file, setFile] = React.useState<File>();
-    const [progress, setProgress] = React.useState()
+    const [progress, setProgress] = React.useState(0)
+    const [urls, setUrls] = React.useState<String>()
     const { edgestore } = useEdgeStore();
 
     return (
@@ -96,14 +97,18 @@ const Classification = () => {
             </div> */}
                 <div className="flex flex-col w-full max-w-sm gap-2 mt-2">
                     <Label htmlFor="file">Masukkan File (.csv)</Label>
-                    <Input id="file" type="file" className=""
+                    <Input
+                        id="file"
+                        type="file"
+                        accept=".csv"
+                        className=""
                         onChange={ (e) => {
                             setFile(e.target.files?.[0]);
                         } }
                     />
 
                     {
-                        (progress >= 0) ? <>
+                        (progress > 0) ? <>
                             <Progress value={ progress } />
                             { progress == 100 ? <p>Upload Selesai</p> : "" }
                         </> : ""
@@ -123,6 +128,8 @@ const Classification = () => {
                                 });
                                 // you can run some server action or api here
                                 // to add the necessary data to your database
+                                setUrls(res.url)
+                                console.log(urls)
                                 console.log(res);
                             }
                         } }
