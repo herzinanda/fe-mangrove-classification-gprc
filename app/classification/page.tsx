@@ -1,39 +1,24 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
-
-import { Separator } from "@/components/ui/separator"
 import { Label } from "@/components/ui/label"
 import Sidebar from "../components/sidebar/sidebar"
 
 import { useEdgeStore } from '../../lib/edgestore';
 import * as React from 'react';
 import { Progress } from "@/components/ui/progress"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+
+import axios from "axios";
+import { Separator } from "@/components/ui/separator"
 
 const Classification = () => {
     const [file, setFile] = React.useState<File>();
     const [progress, setProgress] = React.useState(0)
-    const [urls, setUrls] = React.useState<String>()
+    const [resData, setResData] = React.useState()
+    const [textButton, setTextButton] = React.useState<String>("Submit for classification")
     const { edgestore } = useEdgeStore();
 
     return (
@@ -126,16 +111,61 @@ const Classification = () => {
                                         console.log(progress);
                                     },
                                 });
+
+                                const response = await axios.post("http://localhost:5000/predict", { csv_url: res.url })
                                 // you can run some server action or api here
                                 // to add the necessary data to your database
-                                setUrls(res.url)
-                                console.log(urls)
-                                console.log(res);
+                                // console.log(res);
+                                // console.log(JSON.stringify({ csv_url: res.url }));
+
+                                setResData(response.data)
+                                console.log(resData)
+
                             }
                         } }
-                    >Submit for Classification</Button>
+                    >{ textButton }</Button>
                 </div>
-                <div className="flex flex-row w-full items-center justify-center -my-2">
+                {/* <p>{ data?.report.accuracy }</p>
+                <p>{ data?.actual[0] }</p> */}
+                <div className="mt-4">
+                    <p>Accuracy: { resData?.report.accuracy * 100 }%</p>
+
+
+
+                    <div className="flex flex-row gap-1 mt-4">
+                        <div className="flex flex-col">
+                            <div className="flex bg-primary text-white justify-center items-center">No.</div>
+                            <Separator />
+                            { resData?.actual.map((item, index) => {
+                                return <>
+                                    <div key={ index } className="flex justify-center items-center">{ index + 1 }.</div>
+                                    <Separator />
+                                </>
+                            }) }
+
+                        </div>
+                        <div className="flex flex-col w-full">
+                            <div className="flex bg-primary text-white justify-center items-center">Actual</div>
+                            <Separator />
+                            { resData?.actual.map((item, index) => {
+                                return <>
+                                    <div key={ index } className="flex justify-center items-center">{ item }</div>
+                                    <Separator />
+                                </>
+                            }) }
+
+                        </div>
+                        <div className="flex flex-col justify-center items-center w-full">
+                            <div className="flex justify-center items-center bg-primary text-white w-full">Predicted</div>
+                            <Separator />
+                            { resData?.predicted.map((item, index) => {
+                                return <>
+                                    <div key={ index } className="flex justify-center items-center">{ item }</div>
+                                    <Separator />
+                                </>
+                            }) }
+                        </div>
+                    </div>
                 </div>
             </main >
         </>
