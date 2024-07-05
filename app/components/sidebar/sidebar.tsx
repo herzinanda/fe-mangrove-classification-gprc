@@ -19,7 +19,8 @@ import { usePathname } from "next/navigation"
 
 const links = [
     { href: '/', name: 'Dashboard', icon: 'HomeIcon' },
-    { href: '/classification', name: 'Classification', icon: 'LineChart' },
+    { href: '/training', name: 'Training', icon: 'LineChart' },
+    { href: '/testing', name: 'Testing', icon: 'LineChart' },
 ]
 
 const Sidebar = () => {
@@ -36,13 +37,13 @@ const Sidebar = () => {
                         </Link>
                     </div>
                     <div className="flex-1">
-                        <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
+                        <nav className="grid items-start px-2 text-sm font-medium lg:px-4 pt-8 gap-2">
                             { links.map((link, index) => {
                                 return (
                                     <Link
                                         key={ index }
                                         href={ link.href }
-                                        className={ `flex items-center gap-3 rounded-lg px-3 py-2 transition-all 
+                                        className={ `flex items-center gap-3 rounded-lg text-lg px-3 py-2 transition-all 
                                         ${pathname === link.href ? "bg-primary text-primary-foreground hover:text-muted" : "text-muted-foreground hover:text-primary"}` }
                                     >
                                         {/* <HomeIcon className="h-4 w-4" /> */ }
@@ -145,34 +146,6 @@ const Sidebar = () => {
                                 </div>
                             </SheetContent>
                         </Sheet>
-                        <div className="w-full flex-1">
-                            <form>
-                                <div className="relative">
-                                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                                    <Input
-                                        type="search"
-                                        placeholder="Search products..."
-                                        className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
-                                    />
-                                </div>
-                            </form>
-                        </div>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="secondary" size="icon" className="rounded-full">
-                                    <CircleUser className="h-5 w-5" />
-                                    <span className="sr-only">Toggle user menu</span>
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>Settings</DropdownMenuItem>
-                                <DropdownMenuItem>Support</DropdownMenuItem>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>Logout</DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
                     </header>
                 </div>
             </div>
